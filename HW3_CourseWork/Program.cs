@@ -8,6 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using CourseWorkLibraryV2;
 
+/////////////////////////////////////////////////////////////////////////
+// File: Program.cs                                                    //
+//                                                                     //
+// Purpose: Contains the Menu and file display, creation, submission   //
+//                                                                     //
+// Written By: Earl Platt III                                          //
+//                                                                     //
+// Compiler: Visual Studio 2019                                        //
+//                                                                     //
+/////////////////////////////////////////////////////////////////////////
+
+
 namespace HW3_CourseWork
 {
     class Program
@@ -18,11 +30,12 @@ namespace HW3_CourseWork
             string num;
             string fileNameCreate;
             string fileNameRead;
-            string UserInput;
+            string userInput;
             int i;
 
             #region Class Instatiation
-            CourseWork courseWork = new CourseWork();
+            CourseWork work = new CourseWork();
+            #endregion
 
             #region Do-while Loop
             //Loop to loop menu
@@ -61,7 +74,7 @@ namespace HW3_CourseWork
                     inputSerializer = new DataContractJsonSerializer(typeof(CourseWork));
 
                     //Pulls Data from file and inputs it into class
-                    courseWork = (CourseWork)inputSerializer.ReadObject(reader);
+                    work = (CourseWork)inputSerializer.ReadObject(reader);
                     reader.Close(); //Closes File
                 }
 
@@ -82,7 +95,7 @@ namespace HW3_CourseWork
                     inputSerializer = new DataContractSerializer(typeof(CourseWork));
 
                     //Pulls Data from file and inputs it into class
-                    courseWork = (CourseWork)inputSerializer.ReadObject(reader);
+                    work = (CourseWork)inputSerializer.ReadObject(reader);
                     reader.Close();
                 }
 
@@ -102,7 +115,7 @@ namespace HW3_CourseWork
                     ser = new DataContractJsonSerializer(typeof(CourseWork));
 
                     //Writes to file
-                    ser.WriteObject(writer, courseWork);
+                    ser.WriteObject(writer, work);
                     writer.Close(); //Closes File
                 }
 
@@ -122,12 +135,41 @@ namespace HW3_CourseWork
                     ser = new DataContractSerializer(typeof(CourseWork));
 
                     //Writes to file
-                    ser.WriteObject(writer, courseWork);
+                    ser.WriteObject(writer, work);
                     writer.Close(); //Closes File
                 }
 
-            } while ();
+                //Checks if user inputed 5
+                if(i == 5)
+                {
+                    Console.WriteLine(work.ToString());
+                }
+
+                //Checks if user inputed 6
+                if(i == 6)
+                {
+                    Console.WriteLine("Enter Assignment Name");
+                    userInput = Console.ReadLine().Trim();
+                    Console.WriteLine(work.FindSubmission(userInput).ToString());
+                }
+
+                //Checks for vaild user input
+                if (i < 1 || i > 7)
+                {
+                    Console.WriteLine("Invaild Input");
+                    Console.WriteLine("Enter 1 to 7");
+                    Console.WriteLine("");
+                }
+
+            } while (i != 7); //Loop will not exit until user inputs 7
             #endregion
+
+            //Checks if user inputed 7
+            if (i == 7)
+            {
+                //Terminates Application
+                System.Environment.Exit(1);
+            }
         }
     }
 }
